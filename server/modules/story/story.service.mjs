@@ -18,7 +18,7 @@ export const get_all_stories = async () => {
 }
 // get - /api/stories/user/:id
 export const get_user_stories = async (user_id) => {
-    const user_with_stories = await user_model.findById(user_id);//.populate('stories')
+    const user_with_stories = await user_model.findById(user_id).populate('stories')
     return user_with_stories;
 }
 // get - /api/stories/:id
@@ -43,5 +43,12 @@ export const update_story_by_id = async (story_id, payload) => {
 // delete - /api/stories/:id
 export const delete_story_by_id = async (story_id) => {
     const story = await story_model.findByIdAndRemove(story_id);
+    // get author
+    // find the story by the id in the stories field;
+    const author = await user_model.findById(story.author);
+    const filtered = author.stories.filter((s)=> s._id !== story._id);
+    author.stories = filtered;
+    await author.save();
+    
     return story;
 }

@@ -9,8 +9,8 @@ export const UserSchema = new Schema({
     email       : { type : String, required : true },
     phone       : { type : String },
     stories     : [ StorySchema ],
-    // meetings    : [ MeetingSchema ],
     // stories     : [ { type: Schema.Types.ObjectId, ref:'story'} ],
+    // meetings    : [ MeetingSchema ],
     meetings    : [ { type: Schema.Types.ObjectId, ref:'meeting'} ],
 }, {timestamps:true});
   
